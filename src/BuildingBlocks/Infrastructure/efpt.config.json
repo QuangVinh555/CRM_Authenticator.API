@@ -1,0 +1,77 @@
+﻿{
+   "CodeGenerationMode": 4,
+   "ContextClassName": "CRMContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Entites",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "Infrastructure",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[AccountModel]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[EmployeeModel]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[FunctionModel]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MenuModel]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Page_Function_Mapping]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PageModel]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Role_Account_Mapping]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Role_Page_Function_Mapping]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RoleModel]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "voquangvinh\\sqlexpress01.CRM.dbo",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}
