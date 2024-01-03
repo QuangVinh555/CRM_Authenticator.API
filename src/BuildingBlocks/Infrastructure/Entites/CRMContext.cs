@@ -13,168 +13,77 @@ public partial class CRMContext : DbContext
     {
     }
 
-    public virtual DbSet<AccountModel> AccountModels { get; set; }
+    public virtual DbSet<ProductModel> ProductModels { get; set; }
 
-    public virtual DbSet<EmployeeModel> EmployeeModels { get; set; }
-
-    public virtual DbSet<FunctionModel> FunctionModels { get; set; }
-
-    public virtual DbSet<MenuModel> MenuModels { get; set; }
-
-    public virtual DbSet<PageModel> PageModels { get; set; }
-
-    public virtual DbSet<RoleModel> RoleModels { get; set; }
-
-    public virtual DbSet<RolePageFunctionMapping> RolePageFunctionMappings { get; set; }
+    public virtual DbSet<StoreModel> StoreModels { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AccountModel>(entity =>
+        modelBuilder.Entity<ProductModel>(entity =>
         {
-            entity.HasKey(e => e.AccountId).HasName("PK__AccountM__349DA5A6BA769BE2");
+            entity.HasKey(e => e.ProductId);
 
-            entity.ToTable("AccountModel");
+            entity.ToTable("ProductModel", "tSale");
 
-            entity.Property(e => e.AccountId).ValueGeneratedNever();
+            entity.Property(e => e.ProductId).ValueGeneratedNever();
+            entity.Property(e => e.CommerrcialCode).ValueGeneratedOnAdd();
             entity.Property(e => e.CreateTime).HasColumnType("datetime");
-            entity.Property(e => e.FullName).HasMaxLength(255);
+            entity.Property(e => e.CylinderCapacity).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.ErpproductCode)
+                .HasMaxLength(50)
+                .HasColumnName("ERPProductCode");
+            entity.Property(e => e.GuaranteePeriod).HasMaxLength(50);
+            entity.Property(e => e.ImageUrl).HasMaxLength(100);
+            entity.Property(e => e.IsHot).HasColumnName("isHot");
+            entity.Property(e => e.IsInventory).HasColumnName("isInventory");
             entity.Property(e => e.LastEditTime).HasColumnType("datetime");
-            entity.Property(e => e.LastLogin).HasColumnType("datetime");
-            entity.Property(e => e.Password).HasMaxLength(50);
-            entity.Property(e => e.UserName).HasMaxLength(50);
-
-            entity.HasOne(d => d.Employee).WithMany(p => p.AccountModels)
-                .HasForeignKey(d => d.EmployeeId)
-                .HasConstraintName("FK__AccountMo__Emplo__35BCFE0A");
+            entity.Property(e => e.Note).HasMaxLength(500);
+            entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.ProcessingValue).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.ProductCode).HasMaxLength(50);
+            entity.Property(e => e.ProductGroups).HasMaxLength(500);
+            entity.Property(e => e.ProductName).HasMaxLength(4000);
+            entity.Property(e => e.SafeStock).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.SampleValue).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.ShortName).HasMaxLength(100);
+            entity.Property(e => e.Unit).HasMaxLength(20);
+            entity.Property(e => e.WarrantyConditionCode).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<EmployeeModel>(entity =>
+        modelBuilder.Entity<StoreModel>(entity =>
         {
-            entity.HasKey(e => e.EmployeeId).HasName("PK__Employee__7AD04F117C66115C");
+            entity.HasKey(e => e.StoreId);
 
-            entity.ToTable("EmployeeModel");
+            entity.ToTable("StoreModel", "tMasterData");
 
-            entity.Property(e => e.EmployeeId).ValueGeneratedNever();
+            entity.HasIndex(e => e.CompanyId, "IX_StoreModel_CompanyID");
+
+            entity.Property(e => e.StoreId).ValueGeneratedNever();
+            entity.Property(e => e.Area).HasMaxLength(50);
             entity.Property(e => e.CreateTime).HasColumnType("datetime");
-            entity.Property(e => e.Email).HasMaxLength(255);
-            entity.Property(e => e.EmployeeCode).HasMaxLength(50);
-            entity.Property(e => e.FullName).HasMaxLength(255);
+            entity.Property(e => e.DefaultCustomerSource).HasMaxLength(50);
+            entity.Property(e => e.Email).HasMaxLength(500);
+            entity.Property(e => e.Fax).HasMaxLength(100);
+            entity.Property(e => e.ImageUrl).HasMaxLength(1000);
+            entity.Property(e => e.InvoiceStoreName).HasMaxLength(200);
             entity.Property(e => e.LastEditTime).HasColumnType("datetime");
-            entity.Property(e => e.PhoneNumber).HasMaxLength(50);
-            entity.Property(e => e.ShortName).HasMaxLength(50);
-        });
-
-        modelBuilder.Entity<FunctionModel>(entity =>
-        {
-            entity.HasKey(e => e.FunctionId).HasName("PK__Function__31ABFAF877C24623");
-
-            entity.ToTable("FunctionModel");
-
-            entity.Property(e => e.FunctionId).ValueGeneratedNever();
-            entity.Property(e => e.FunctionCode).HasMaxLength(200);
-            entity.Property(e => e.FunctionName).HasMaxLength(500);
-        });
-
-        modelBuilder.Entity<MenuModel>(entity =>
-        {
-            entity.HasKey(e => e.MenuId).HasName("PK__MenuMode__C99ED23042F5A8CB");
-
-            entity.ToTable("MenuModel");
-
-            entity.Property(e => e.MenuId).ValueGeneratedNever();
-            entity.Property(e => e.CreateTime).HasColumnType("datetime");
-            entity.Property(e => e.Icon).HasMaxLength(255);
-            entity.Property(e => e.LastEditTime).HasColumnType("datetime");
-            entity.Property(e => e.MenuCode).HasMaxLength(50);
-            entity.Property(e => e.MenuName).HasMaxLength(500);
-        });
-
-        modelBuilder.Entity<PageModel>(entity =>
-        {
-            entity.HasKey(e => e.PageId).HasName("PK__PageMode__C565B104AAC036F7");
-
-            entity.ToTable("PageModel");
-
-            entity.Property(e => e.PageId).ValueGeneratedNever();
-            entity.Property(e => e.CreateTime).HasColumnType("datetime");
-            entity.Property(e => e.LastEditTime).HasColumnType("datetime");
-            entity.Property(e => e.PageCode).HasMaxLength(50);
-            entity.Property(e => e.PageIcon).HasMaxLength(500);
-            entity.Property(e => e.PageName).HasMaxLength(500);
-            entity.Property(e => e.PageUrl).HasMaxLength(500);
-
-            entity.HasOne(d => d.Menu).WithMany(p => p.PageModels)
-                .HasForeignKey(d => d.MenuId)
-                .HasConstraintName("FK__PageModel__MenuI__36B12243");
-
-            entity.HasMany(d => d.Functions).WithMany(p => p.Pages)
-                .UsingEntity<Dictionary<string, object>>(
-                    "PageFunctionMapping",
-                    r => r.HasOne<FunctionModel>().WithMany()
-                        .HasForeignKey("FunctionId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__Page_Func__Funct__38996AB5"),
-                    l => l.HasOne<PageModel>().WithMany()
-                        .HasForeignKey("PageId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__Page_Func__PageI__37A5467C"),
-                    j =>
-                    {
-                        j.HasKey("PageId", "FunctionId").HasName("PK__Page_Fun__567F0EAB5601D95C");
-                        j.ToTable("Page_Function_Mapping");
-                    });
-        });
-
-        modelBuilder.Entity<RoleModel>(entity =>
-        {
-            entity.HasKey(e => e.RoleId).HasName("PK__RoleMode__8AFACE1A1D24F139");
-
-            entity.ToTable("RoleModel");
-
-            entity.Property(e => e.RoleId).ValueGeneratedNever();
-            entity.Property(e => e.CreateTime).HasColumnType("datetime");
-            entity.Property(e => e.LastEditTime).HasColumnType("datetime");
-            entity.Property(e => e.RoleCode).HasMaxLength(50);
-            entity.Property(e => e.RoleName).HasMaxLength(255);
-
-            entity.HasMany(d => d.Accounts).WithMany(p => p.Roles)
-                .UsingEntity<Dictionary<string, object>>(
-                    "RoleAccountMapping",
-                    r => r.HasOne<AccountModel>().WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__Role_Acco__Accou__34C8D9D1"),
-                    l => l.HasOne<RoleModel>().WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__Role_Acco__RoleI__33D4B598"),
-                    j =>
-                    {
-                        j.HasKey("RoleId", "AccountId").HasName("PK__Role_Acc__F9B31440067E5C75");
-                        j.ToTable("Role_Account_Mapping");
-                    });
-        });
-
-        modelBuilder.Entity<RolePageFunctionMapping>(entity =>
-        {
-            entity.HasKey(e => new { e.RoleId, e.PageId, e.FunctionId }).HasName("PK__Role_Pag__2F9D3EF0E8976190");
-
-            entity.ToTable("Role_Page_Function_Mapping");
-
-            entity.HasOne(d => d.Function).WithMany(p => p.RolePageFunctionMappings)
-                .HasForeignKey(d => d.FunctionId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Role_Page__Funct__3B75D760");
-
-            entity.HasOne(d => d.Page).WithMany(p => p.RolePageFunctionMappings)
-                .HasForeignKey(d => d.PageId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Role_Page__PageI__3A81B327");
-
-            entity.HasOne(d => d.Role).WithMany(p => p.RolePageFunctionMappings)
-                .HasForeignKey(d => d.RoleId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Role_Page__RoleI__398D8EEE");
+            entity.Property(e => e.LogoUrl).HasMaxLength(1000);
+            entity.Property(e => e.MLat)
+                .HasMaxLength(50)
+                .HasColumnName("mLat");
+            entity.Property(e => e.MLong)
+                .HasMaxLength(50)
+                .HasColumnName("mLong");
+            entity.Property(e => e.SaleOrgCode).HasMaxLength(50);
+            entity.Property(e => e.SmstemplateCode)
+                .HasMaxLength(50)
+                .HasColumnName("SMSTemplateCode");
+            entity.Property(e => e.StoreAddress).HasMaxLength(500);
+            entity.Property(e => e.StoreName)
+                .IsRequired()
+                .HasMaxLength(100);
+            entity.Property(e => e.TelProduct).HasMaxLength(100);
+            entity.Property(e => e.TelService).HasMaxLength(100);
         });
 
         OnModelCreatingPartial(modelBuilder);

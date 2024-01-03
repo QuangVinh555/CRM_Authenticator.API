@@ -17,9 +17,9 @@ namespace Authenticator.API.Controllers
         }
         [HttpGet]
         public async Task<IActionResult> Test() {
-            var test = await _context.AccountModels.Select(x => new
+            var test = await _context.ProductModels.Select(x => new
             {
-                FullName = x.FullName,
+                FullName = x.ProductName,
                 CreateBy = x.CreateBy,
             }).ToListAsync();
             return Ok(test);

@@ -16,43 +16,15 @@
    "T4TemplatePath": null,
    "Tables": [
       {
-         "Name": "[dbo].[AccountModel]",
+         "Name": "[tMasterData].[StoreModel]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[EmployeeModel]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FunctionModel]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[MenuModel]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Page_Function_Mapping]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[PageModel]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Role_Account_Mapping]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Role_Page_Function_Mapping]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[RoleModel]",
+         "Name": "[tSale].[ProductModel]",
          "ObjectType": 0
       }
    ],
-   "UiHint": "voquangvinh\\sqlexpress01.CRM.dbo",
+   "UiHint": "server-3.ISD_DGW.dbo",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,

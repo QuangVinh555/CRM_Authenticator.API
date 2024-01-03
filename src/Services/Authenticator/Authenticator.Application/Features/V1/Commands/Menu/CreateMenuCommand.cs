@@ -15,6 +15,7 @@ namespace Authenticator.Application.Features.V1.Commands.Menu
     {
         public Task<bool> Handle(CreateMenuCommand request, CancellationToken cancellationToken)
         {
+
             throw new NotImplementedException();
         }
     }
