@@ -9,13 +9,13 @@ namespace Authenticator.API.Extensions
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
-            services.AddJWTTokenServices(configuration);
+            //services.AddJWTTokenServices(configuration);
 
             //MediatR
-            services.AddMediatR(DIAssemblies.AssembliesToScan);
+            //services.AddMediatR(DIAssemblies.AssembliesToScan);
 
             //Auto mapper
-            services.AddAutoMapper(DIAssemblies.AssembliesToScan);
+            //services.AddAutoMapper(DIAssemblies.AssembliesToScan);
 
             // Swagger Config
             SwaggerConfig.Configure(services, configuration);
