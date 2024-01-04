@@ -1,7 +1,6 @@
 ﻿using Authenticator.API.Extensions.Configures;
 using Core.Exceptions;
 using Infrastructure.Entites;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Authenticator.API.Extensions
@@ -26,7 +25,7 @@ namespace Authenticator.API.Extensions
             CommonConfig.Configure(services, configuration);
 
             // SignalR
-            services.AddSignalR();
+            //services.AddSignalR();
 
             services.AddHttpContextAccessor();
 
