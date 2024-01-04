@@ -13,7 +13,7 @@ namespace Authenticator.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMenu(CreateMenuCommand commamd)
         {
-                                                
+            return Ok();                                       
         }
     }
 }
