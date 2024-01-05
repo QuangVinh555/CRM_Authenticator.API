@@ -18,5 +18,12 @@ namespace Core.Configurations
               .AddJsonFile("appsettings.json")
               .Build();
         }
+        public string ExpiredToken
+        {
+            get
+            {
+                return this._configuration["JwtSettings:ExpiredToken"];
+            }
+        }
     }
 }
