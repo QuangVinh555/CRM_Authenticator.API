@@ -19,9 +19,21 @@ namespace Core.Auth
     }
     public class TokenService : ITokenService
     {
-        public Task<TokenResponse> GetToken(TokenRequest request)
-        {
+        private readonly JwtSettings _jwtSettings;
 
+        public TokenService(JwtSettings jwtSettings ) {
+            _jwtSettings = jwtSettings;
+        }
+        public async Task<TokenResponse> GetToken(TokenRequest request)
+        {
+            var token = new TokenResponse();
+            if (true)
+            {
+                token.UserName = request.UserName;
+                var jwtToken = GenerateJwt(GetSigningCredentials(),token);
+                token.AccessToken = jwtToken;
+                return token;
+            }
             throw new CommonException(CommonResource.MSG_FAIL, "Đăng nhập");
         }
         private string GenerateJwt(SigningCredentials signingCredentials, TokenResponse account)
@@ -30,24 +42,20 @@ namespace Core.Auth
             var claims = new[]
             {
                     new Claim("Id", account.AccountId.ToString()),
-                    //new Claim("Permission", JsonConvert.SerializeObject(account.Permission)),
                     new Claim(ClaimTypes.Name, account.UserName),
-                    //new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
                     new Claim(ClaimTypes.Expiration, DateTime.Now.AddSeconds(Int64.Parse(ExpiredTime)).ToString("MMM ddd dd yyyy HH:mm:ss tt")),
                     new Claim(ClaimTypes.Sid, account.AccountId.ToString()),
-                    new Claim(ClaimTypes.Spn, account.EmployeeCode ?? ""),
-                    //fullname
                     new Claim(ClaimTypes.Upn, account.FullName??""),
                     //RoleCode
-                    new Claim(ClaimTypes.Role, account.Role ??""),
-                    //RoleName
-                    new Claim("RoleName",account.RoleName ?? ""),
-                    //SaleOrg Code
-                    new Claim ("SaleOrgCode", account.SaleOrgCode ?? ""),
-                    //Employee Code
-                    new Claim("EmployeeCode",account.EmployeeCode??""),
-                    //Company code
-                    new Claim("CompanyCode",account.CompanyCode ?? ""),
+                    //new Claim(ClaimTypes.Role, account.Role ??""),
+                    ////RoleName
+                    //new Claim("RoleName",account.RoleName ?? ""),
+                    ////SaleOrg Code
+                    //new Claim ("SaleOrgCode", account.SaleOrgCode ?? ""),
+                    ////Employee Code
+                    //new Claim("EmployeeCode",account.EmployeeCode??""),
+                    ////Company code
+                    //new Claim("CompanyCode",account.CompanyCode ?? ""),
              };
 
             var expireTime = DateTime.Now.AddSeconds(Int64.Parse(ExpiredTime));

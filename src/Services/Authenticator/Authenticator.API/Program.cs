@@ -16,10 +16,15 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
+//app.UseInfrastructure(app.Environment);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+    app.UseSwagger(options =>
+    {
+        options.SerializeAsV2 = true;
+    });
     app.UseSwaggerUI();
 }
 
