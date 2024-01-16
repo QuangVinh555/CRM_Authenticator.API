@@ -1,5 +1,7 @@
 ﻿using Core.Exceptions;
 using Core.Properties;
+using Infrastructure.Entites;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +16,17 @@ namespace Core.Auth
     }
     public class TokenService : ITokenService
     {
-        public Task<TokenResponse> GetToken(TokenRequest request)
-        {
+        private readonly CRMContext _context;
 
-            throw new CommonException(CommonResource.MSG_FAIL, "Đăng nhập");
+        public TokenService(CRMContext context) {
+            _context = context;
+        }
+        public async Task<TokenResponse> GetToken(TokenRequest request)
+        {
+            var user = _context.AccountModels.AsQueryable();
+            var a = user.Count();
+            if (user == null) { throw new CommonException(CommonResource.MSG_FAIL, "Dang nhap"); }
+            return null;
         }
     }
 }
