@@ -16,4 +16,16 @@ namespace Core.Auth
         public DateTime ExpriedTimeAccessToken { get; set; }
         public DateTime ExpriedTimeRefreshToken { get; set; }
     }
+
+    public class TokenRoleResponse
+    {
+        public Guid? RoleId { get; set; }
+        public string RoleCode { get; set; }
+        public string RoleName { get; set; }
+    }
+
+    public class TokenRolePageFunctionResponse
+    {
+
+    }
 }

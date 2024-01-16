@@ -2,6 +2,7 @@
 using Core.Exceptions;
 using Core.Extensions;
 using Core.Properties;
+using Core.Services.Common;
 using Infrastructure.Entites;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -24,31 +25,40 @@ namespace Core.Auth
     {
         private readonly JwtSettings _jwtSettings;
         private readonly CRMContext _context;
+        private readonly ICommonService _service;
 
-        public TokenService(JwtSettings jwtSettings, CRMContext context ) {
+        public TokenService(JwtSettings jwtSettings, CRMContext context, ICommonService service ) {
             _jwtSettings = jwtSettings;
             _context = context;
+            _service = service;
         }
         public async Task<TokenResponse> GetToken(TokenRequest request)
         {
-
-            var account = await _context.AccountModels
-                .FirstOrDefaultAsync(x => x.UserName == request.UserName 
-                    && x.Password == "Abc@12345");
-            var token = new TokenResponse();
-            if (true)
+            // Nếu có nhập mật khẩu thì mã hóa
+            if (!string.IsNullOrEmpty(request.Password))
             {
-                token.UserName = request.UserName;
-                var jwtToken = GenerateJwt(GetSigningCredentials(),token);
-                token.AccessToken = jwtToken;
-                if(token.UserName != null)
-                {
-                    var refresh = GenRefreshToken(token.UserName);
-                    token.RefreshToken = refresh.Token;
-                }
-                return token;
+                request.Password = _service.GetMd5Sum(request.Password);
             }
-            throw new CommonException(CommonResource.MSG_FAIL, "Đăng nhập");
+
+            // Kiểm tra tài khoản đăng nhập
+            var account = await _context.AccountModels.FirstOrDefaultAsync(x => x.UserName == request.UserName 
+                    && x.Password == request.Password);
+            if (account == null) throw new CommonException(CommonResource.MSG_NOTFOUND, "Tài khoản hoặc mật khẩu");
+
+            var token = new TokenResponse();
+
+            token.UserName = request.UserName;
+            token.FullName = account.FullName;
+
+            var jwtToken = GenerateJwt(GetSigningCredentials(),token);
+            token.AccessToken = jwtToken;
+            if (token.UserName != null)
+            {
+                var refresh = GenRefreshToken(token.UserName);
+                token.RefreshToken = refresh.Token;
+            }
+            return token;
+           
         }
         private string GenerateJwt(SigningCredentials signingCredentials, TokenResponse account)
         {
