@@ -1,5 +1,6 @@
 ﻿using Authenticator.API.Extensions.Configures;
 using Core.Exceptions;
+using Core.Extensions;
 using Infrastructure.Entites;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +11,7 @@ namespace Authenticator.API.Extensions
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
-            //services.AddJWTTokenServices(configuration);
+            services.AddJWTTokenServices(configuration);
 
             //MediatR
             //services.AddMediatR(DIAssemblies.AssembliesToScan);
