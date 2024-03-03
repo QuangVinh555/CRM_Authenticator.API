@@ -1,4 +1,6 @@
-﻿namespace Authenticator.API.Extensions
+﻿using Core.Extensions;
+
+namespace Authenticator.API.Extensions
 {
     public static class ApplicationExtensions
     {
@@ -38,7 +40,7 @@
                 endpoints.MapDefaultControllerRoute();
             });
 
-            //TokenExtensions.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
+            TokenExtensions.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
         }
     }
 }

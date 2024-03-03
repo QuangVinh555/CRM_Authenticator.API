@@ -18,6 +18,11 @@ namespace Authenticator.API.Controllers
             _tokenService = tokenService;
         }
 
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] TokenRequest request)
         {

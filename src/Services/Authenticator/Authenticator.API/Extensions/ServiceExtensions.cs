@@ -2,6 +2,7 @@
 using Core.Exceptions;
 using Core.Extensions;
 using Infrastructure.Entites;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Authenticator.API.Extensions
@@ -14,7 +15,7 @@ namespace Authenticator.API.Extensions
             services.AddJWTTokenServices(configuration);
 
             //MediatR
-            //services.AddMediatR(DIAssemblies.AssembliesToScan);
+            services.AddMediatR(DIAssemblies.AssembliesToScan);
 
             //Auto mapper
             //services.AddAutoMapper(DIAssemblies.AssembliesToScan);

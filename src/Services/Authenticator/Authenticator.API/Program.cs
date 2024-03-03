@@ -16,7 +16,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
-//app.UseInfrastructure(app.Environment);
+app.UseInfrastructure(app.Environment);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
