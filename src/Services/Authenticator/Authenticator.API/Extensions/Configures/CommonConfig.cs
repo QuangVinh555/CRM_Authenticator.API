@@ -1,4 +1,5 @@
-﻿using NetCore.AutoRegisterDi;
+﻿using Core.Commons;
+using NetCore.AutoRegisterDi;
 using System.Text;
 
 namespace Authenticator.API.Extensions.Configures
@@ -36,7 +37,7 @@ namespace Authenticator.API.Extensions.Configures
             //services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 
             // Inject UnitOfWork
-            //services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
+            services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
         }
     }
 }
