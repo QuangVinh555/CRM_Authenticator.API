@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -34,11 +35,11 @@ namespace Core.Auth
         }
         public async Task<TokenResponse> GetToken(TokenRequest request)
         {
-            // Nếu có nhập mật khẩu thì mã hóa
-            if (!string.IsNullOrEmpty(request.Password))
-            {
-                request.Password = _service.GetMd5Sum(request.Password);
-            }
+            //// Nếu có nhập mật khẩu thì mã hóa
+            //if (!string.IsNullOrEmpty(request.Password))
+            //{
+            //    request.Password = _service.GetMd5Sum(request.Password);
+            //}
 
             // Kiểm tra tài khoản đăng nhập
             var account = await _context.AccountModels.FirstOrDefaultAsync(x => x.UserName == request.UserName 
@@ -57,6 +58,49 @@ namespace Core.Auth
                 var refresh = GenRefreshToken(token.UserName);
                 token.RefreshToken = refresh.Token;
             }
+            var res = new TokenRolePageFunctionResponse();
+            var functionList = new List<FunctionResponse>();
+            var pageList = new List<PageResponse>();
+            // Lay ra cac role
+            var roles = _context.AccountModels.Where(x => x.AccountId == account.AccountId)
+                .Include(x => x.Roles)
+                .FirstOrDefault();
+
+            var listRoles = roles.Roles.Select(x => x.RoleId).ToList();
+            foreach (var item in listRoles)
+            {
+                var a = _context.RolePageFunctionMappings.Where(x => x.RoleId == item).Select(x => new
+                {
+                    role = x,
+                    page = x.Page,
+                    function = x.Function
+                }).ToList();
+
+                var page = a.GroupBy(x => x.page.PageId).Select(x => new PageResponse
+                {
+                    PageId = x.Key,
+                    PageName = x.FirstOrDefault()?.page.PageName,
+                    FunctionList = a.Where(y => y.page.PageId == x.Key).Select(x => new FunctionResponse
+                    {
+                        FunctionId = x.function.FunctionId,
+                        FunctionName = x.function.FunctionName,
+                    }).ToList(),
+                }).ToList();
+
+
+
+                pageList = page;
+                token.RoleList = a.GroupBy(x => x.role.RoleId).Select(x => new TokenRoleResponse
+                {
+                    RoleCode = x.FirstOrDefault().role.Role.RoleCode,
+                    RoleName = x?.FirstOrDefault().role.Role.RoleName,
+                }).ToList();
+                res.PageList = pageList;
+            }
+
+
+
+            token.AuthenticateList = res;
             return token;
            
         }
