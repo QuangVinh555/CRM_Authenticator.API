@@ -29,6 +29,8 @@ namespace Authenticator.API.Extensions
             // SignalR
             services.AddSignalR();
 
+            //services.AddHostedService<MqttService>();
+
             services.AddHttpContextAccessor();
 
             //Global filter
