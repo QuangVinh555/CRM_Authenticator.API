@@ -27,7 +27,9 @@ namespace Authenticator.API.Extensions
             CommonConfig.Configure(services, configuration);
 
             // SignalR
-            //services.AddSignalR();
+            services.AddSignalR();
+
+            //services.AddHostedService<MqttService>();
 
             services.AddHttpContextAccessor();
 
@@ -42,6 +44,22 @@ namespace Authenticator.API.Extensions
             services.AddApiVersioning();
 
             return services;
+        }
+
+        public static void ConfigureCors(this IServiceCollection services, IConfiguration configuration)
+        {
+            var origins = configuration.GetValue<string>("AllowedOrigins").Split(";");
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder.WithOrigins(origins)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials() // Cho phép sử dụng các credentials từ origin cụ thể
+                        .WithExposedHeaders("Access-Control-Allow-Origin"); // Chỉ định header được tiết lộ
+                });
+            });
         }
     }
 }

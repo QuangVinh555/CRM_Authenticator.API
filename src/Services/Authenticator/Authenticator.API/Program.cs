@@ -1,4 +1,6 @@
 ﻿using Authenticator.API.Extensions;
+using Authenticator.API.Hubs;
+using Authenticator.API.MQTT;
 using Infrastructure.Entites;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +15,9 @@ builder.Services.AddSwaggerGen();
 
 // Đăng ký services
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.ConfigureCors(builder.Configuration);
+// Register MqttService as a hosted service
+builder.Services.AddHostedService<MqttService>();
 
 var app = builder.Build();
 

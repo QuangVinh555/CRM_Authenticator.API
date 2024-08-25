@@ -45,10 +45,16 @@ namespace Authenticator.API.Controllers
             return Ok(listRes);
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> CreateMenu(CreateMenuCommand commamd)
+        //{
+        //    return Ok(123);                                       
+        //}
+
         [HttpPost]
-        public async Task<IActionResult> CreateMenu(CreateMenuCommand commamd)
+        public async Task<IActionResult> TestMenu2([FromQuery]CreateMenuCommand commamd)
         {
-            return Ok(123);                                       
+            return Ok(123);
         }
     }
 }

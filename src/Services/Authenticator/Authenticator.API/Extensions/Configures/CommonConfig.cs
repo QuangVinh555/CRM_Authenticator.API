@@ -1,4 +1,5 @@
-﻿using Core.Commons;
+﻿using Authenticator.API.MQTT;
+using Core.Commons;
 using NetCore.AutoRegisterDi;
 using System.Text;
 

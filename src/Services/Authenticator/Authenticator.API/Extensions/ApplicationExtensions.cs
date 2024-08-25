@@ -1,4 +1,6 @@
-﻿using Core.Extensions;
+﻿using Authenticator.API.Hubs;
+using Core.Extensions;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Authenticator.API.Extensions
 {
@@ -20,6 +22,14 @@ namespace Authenticator.API.Extensions
                 });
             }
 
+            // Các cấu hình khác...
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapHub<ChatHub>("/myHub"); // Định nghĩa đường dẫn cho Hub
+            //                                       // Định nghĩa các endpoint khác nếu cần...
+            //});
+
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
@@ -38,6 +48,7 @@ namespace Authenticator.API.Extensions
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
+                endpoints.MapHub<ChatHub>("/chathub");
             });
 
             TokenExtensions.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
