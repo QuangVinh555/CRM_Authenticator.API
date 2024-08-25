@@ -10,7 +10,8 @@ namespace Authenticator.Application.Features.V1.Commands.PQChucNangWeb
 {
     public class UpdatePQChucNangWebCommand : CreateOrUpdatePQChucNangWebCommand, IRequest<bool>
     {
-        // test git
+        // test git 
+        //test
     }
 
     public class UpdatePQChucNangWebCommandHandler : IRequestHandler<UpdatePQChucNangWebCommand, bool>
