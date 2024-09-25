@@ -1,3 +1,6 @@
+﻿using Authenticator.API.Extensions;
+using Authenticator.API.Hubs;
+using Authenticator.API.MQTT;
 using Infrastructure.Entites;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -6,22 +9,27 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-// Connect SQL SERVER
-builder.Services.AddDbContext<CRMContext>(
-        options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-// MediaR
-//builder.Services.AddMediatR();
+
+// Đăng ký services
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.ConfigureCors(builder.Configuration);
+// Register MqttService as a hosted service
+builder.Services.AddHostedService<MqttService>();
 
 var app = builder.Build();
+
+app.UseInfrastructure(app.Environment);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+    app.UseSwagger(options =>
+    {
+        options.SerializeAsV2 = true;
+    });
     app.UseSwaggerUI();
 }
 
